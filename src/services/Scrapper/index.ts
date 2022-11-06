@@ -118,14 +118,14 @@ const getDetailCinema = async (cinemaId: string) => {
 
 const getDetailMovie = async (movieId: string) => {
   const { data } = await axios.get(
-    `${domain}/pelicula/la-luz-del-diablo/${movieId}`
+    `${domain}/pelicula/${movieId}`
   );
   const $ = load(data);
   const htmlDataMovie = $(
     "body > section.section-banner-movie > div.banner-pelicual.py-3 > div > div > div.col-12.col-lg-5.text-white"
   );
   const title = $(htmlDataMovie).find("h1").text();
-
+  const poster = $('body > section.section-banner-movie > div.fondo-container-pelicula').attr('style')?.split('(')[1].slice(0,-1);
   const statePublic = $(htmlDataMovie).find("p.text-white-50 > small").text();
   const resume = $(htmlDataMovie).find("p:nth-child(6) > small").text();
   const category = $(htmlDataMovie)
@@ -176,6 +176,7 @@ const getDetailMovie = async (movieId: string) => {
 
   const infoMovie = {
     title,
+    poster,
     statePublic,
     resume,
     category,
